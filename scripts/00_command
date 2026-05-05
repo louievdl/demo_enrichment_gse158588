@@ -71,4 +71,5 @@ ERROR: obligatory organism name (-o) not specified
 cp -a ../results/enrichment/enrichment_analysis.html ../index.html
 vi ../index.html # add some details
 cp -a ../results/enrichment/figure-html ../results/enrichment/site_libs ..
-
+git add 00_command ../index.html ../results/enrichment/*.html ../results/enrichment/*.xlsx ../results/enrichment/*.txt ../results/enrichment/*.pdf ../figure-html/enrichment-plot-contrast-tabs-* ../site_libs/*/* ../site_libs/bootstrap-3.3.5/css/fonts/*
+git commit -m "initial command script and results upload"
