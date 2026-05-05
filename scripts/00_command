@@ -1,0 +1,74 @@
+# 20260505 do follow-up demo enrichment analysis
+git clone https://github.com/louievdl/demo_enrichment_gse158588.git
+cd demo_enrichment_gse158588
+mkdir scripts data
+cd scripts/
+
+~/sharedscratch/cgebm_pipelines_test/enrichment_ppln.sh
+usage: enrichment_ppln.sh -t <TT_XLSX> -s <SYMBOL_COL> -f <LFC_COL> -F <LFC_THRESH> \
+      -q <PADJ_COL> -Q <FDR_THRESH> -r <RANKING_COL> -v <MIN_OVLP> -C <MSIG_CATS_STR> \
+      -o <ORG_NAME> -O <ENR_PDF> -h
+---
+-t  path to a .xlsx file with tabs named *_gene_table. Each tab contains a ranked table of genes.
+    Columns will contain gene symbols and one or more ranking statistics such as log fold change
+    and p-value or false discovery rate.
+    [obligatory]
+-s  Name of symbol column in .xlsx file.
+    [default: symbol]
+-f  Name of log fold change column in .xlsx file. Used for thresholding gene significance.
+    [default: logFC]
+-F  Absolute log2 fold change threshold, part of detection of gene significance for eventual
+    gene list enrichment analysis.
+    [default: 0.0]
+-q  Column name in .xlsx file where estimates of FDR (Q-values) are found.
+    [default: padj]
+-Q  FDR threshold. Numeric significance threshold for gene differential expression.
+    [default: 0.05]
+-r  Name of gene ranking column in .xlsx file. Used for GSEA analysis. Rarely, if too few genes are
+    up or down, this ranking will be used to choose 100 genes for list enrichment. If no ranking
+    column is specified, no GSEA analysis will be performed and list enrichment will be skipped if
+    there are fewer than the minimum number of genes required for overlaps (see -v option)
+    [default: no ranking column]
+-v  Minimum number of overlaps between genes deemed significant and a gene category list.
+    [default: 3]
+-C  Comma-separated specifiers of collections within the Molecular Signatures Database to use in
+    enrichment analyses (see https://www.gsea-msigdb.org/gsea/msigdb):
+    [default: "C2,C5,H"]
+-o  Organism name: one of human, mouse, Xlaevis, Xtropicalis, Calbicans, rice.
+    This sets various variables/libraries. Ask for others.
+    [obligatory]
+-O  path to enrichment pdf. Provide a stub name with .pdf extension. This will be modified with
+    an extension reflecting each enrichment result.
+    [default: ../results/enrichmnet/enr_.pdf]
+-h  print this help message.
+ERROR: obligatory data file argument (-t) missing
+ERROR: obligatory data file  not found
+ERROR: obligatory organism name (-o) not specified
+
+~/sharedscratch/cgebm_pipelines_test/enrichment_ppln.sh -t ../data/accute_cocaine_dge_1hv0h.xlsx -s symbol -f log2FoldChange -F 0 -q padj -Q 0.05 -r sign_lr -v 5 -o mouse 
+#PPLN_SCRIPT_DIR=/uoa/scratch/users/s01lv1/cgebm_pipelines_test/enrichment_pipeline/scripts
+#PPLN_PARENT_DIR=/uoa/scratch/users/s01lv1/cgebm_pipelines_test
+#IMAGE_PATH=/uoa/scratch/users/s01lv1/cgebm_pipelines_test/images/louievdl_rstudio_450l.sif
+#R_LIBPATHS=/uoa/scratch/users/s01lv1/cgebm_pipelines_test/R4.5s
+#TT_XLSX=/uoa/scratch/users/s01lv1/demo_enrichment_gse158588/data/accute_cocaine_dge_1hv0h.xlsx
+#PROJ_SCRIPT_DIR=/uoa/scratch/users/s01lv1/demo_enrichment_gse158588/scripts
+#SYMBOL_COL=symbol
+#LFC_COL=log2FoldChange
+#LFC_THRESH=0
+#PADJ_COL=padj
+#FDR_THRESH=0.05
+#RANKING_COL=sign_lr
+#MIN_OVLP=5
+#ORG_NAME=mouse
+#ENR_PDF=/uoa/scratch/users/s01lv1/demo_enrichment_gse158588/results/enrichment/enr_.pdf
+#ORG_DB_KEYTYPE=SYMBOL
+#ORG_DB_NCBIKEY=ENTREZID
+#MSIG_ORG_STR=mouse
+#MSIG_CATS_STR=C2,C5,H
+#KEGG_ORG_STR=mmu
+#enrichment analysis (pid 3227688) submitted.
+
+cp -a ../results/enrichment/enrichment_analysis.html ../index.html
+vi ../index.html # add some details
+cp -a ../results/enrichment/figure-html ../results/enrichment/site_libs ..
+
